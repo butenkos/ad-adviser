@@ -11,9 +11,8 @@ import static com.butenkos.ad.sdk.adviser.util.NullChecker.checkNotNull;
  * @see com.butenkos.ad.sdk.adviser.model.domain.AdNetworkData
  * @see com.butenkos.ad.sdk.adviser.model.domain.ImmutableAdNetworkData
  */
-public class ModifiableAdNetworkDataImpl implements ModifiableAdNetworkData {
-  private final Map<Country, Map<AdType, List<AdNetwork>>> countryToTypeToNetwork =
-      new EnumMap<>(Country.class);
+public class MutableAdNetworkDataImpl implements MutableAdNetworkData {
+  private final Map<Country, Map<AdType, List<AdNetwork>>> countryToTypeToNetwork = new EnumMap<>(Country.class);
   private int entriesCount = 0;
   private String batchJobId;
 
@@ -37,6 +36,11 @@ public class ModifiableAdNetworkDataImpl implements ModifiableAdNetworkData {
   @Override
   public String getBatchJobId() {
     return batchJobId;
+  }
+
+  @Override
+  public Map<Country, Map<AdType, List<AdNetwork>>> getAllContents() {
+    return countryToTypeToNetwork;
   }
 
   @Override

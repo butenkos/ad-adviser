@@ -20,7 +20,7 @@ import static java.util.Collections.emptyList;
  * Implementation based on the {@code EnumMap}, which makes it very performant in getting
  * data out of it.
  *
- * @see ModifiableAdNetworkDataImpl
+ * @see MutableAdNetworkDataImpl
  */
 public class AdNetworkDataCacheImpl implements AdNetworkDataCache {
   private final static Logger LOG = LoggerFactory.getLogger(AdNetworkDataCacheImpl.class);
@@ -30,20 +30,20 @@ public class AdNetworkDataCacheImpl implements AdNetworkDataCache {
   public AdNetworkDataCacheImpl(AdNetworkDataDao dataDao, AdNetworkData adNetworkData) {
     NullChecker.checkNotNull(dataDao, adNetworkData);
     this.dataDao = dataDao;
-    this.adNetworkData = new ImmutableAdNetworkData(adNetworkData);
+    this.adNetworkData = adNetworkData;
   }
 
   @Override
   public void update(String batchJobId) {
     LOG.info("trying to update cache data, batchJobId {}", batchJobId);
-    final AdNetworkData updatedData = dataDao.getByBatchJobId(batchJobId);
+    final MutableAdNetworkData updatedData = dataDao.getByBatchJobId(batchJobId);
     saveUpdatedDataOrStayWithOldOne(updatedData);
   }
 
   @Override
   public void updateWithMostRecentData() {
     LOG.info("trying to update cache data with the most recent data");
-    final AdNetworkData updatedData = dataDao.getMostRecent();
+    final MutableAdNetworkData updatedData = dataDao.getMostRecent();
     saveUpdatedDataOrStayWithOldOne(updatedData);
   }
 
@@ -94,7 +94,7 @@ public class AdNetworkDataCacheImpl implements AdNetworkDataCache {
     );
   }
 
-  private void saveUpdatedDataOrStayWithOldOne(AdNetworkData updatedData) {
+  private void saveUpdatedDataOrStayWithOldOne(MutableAdNetworkData updatedData) {
     if (null == updatedData || updatedData.getEntriesCount() == 0) {
       final String errorMessage =
           "failed to update AdNetworksData cache, old data is being used, updatedData = " + updatedData;

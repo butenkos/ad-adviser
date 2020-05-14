@@ -10,7 +10,7 @@ class AdNetworkDataCacheImplTest {
 
   @Test
   public void returnsEmptyCollectionsWhenNoDataFound() {
-    final AdNetworkData data = new ModifiableAdNetworkDataImpl();
+    final AdNetworkData data = new MutableAdNetworkDataImpl();
     final AdNetworkDataCache cache = new AdNetworkDataCacheImpl(new AdNetworkDataDaoImpl(null), data);
     assertTrue(cache.get(Country.SCOTLAND).isEmpty());
     assertTrue(cache.get(Country.SCOTLAND, AdType.INTERSTITIAL).isEmpty());
@@ -18,14 +18,14 @@ class AdNetworkDataCacheImplTest {
 
   @Test
   public void entryCountIsZeroWhenEmpty() {
-    final AdNetworkData data = new ModifiableAdNetworkDataImpl();
+    final AdNetworkData data = new MutableAdNetworkDataImpl();
     final AdNetworkDataCache cache = new AdNetworkDataCacheImpl(new AdNetworkDataDaoImpl(null), data);
     assertEquals(0, cache.getEntriesCount());
   }
 
   @Test
   public void canServeData() {
-    final ModifiableAdNetworkData data = new ModifiableAdNetworkDataImpl();
+    final MutableAdNetworkData data = new MutableAdNetworkDataImpl();
     final AdNetwork one = new AdNetwork("one", (byte) 5);
     data.put(Country.URUGUAY, AdType.INTERSTITIAL, one);
     final AdNetwork two = new AdNetwork("two", (byte) 7);
@@ -46,7 +46,7 @@ class AdNetworkDataCacheImplTest {
         )
     );
     assertThrows(IllegalArgumentException.class, () -> new AdNetworkDataCacheImpl(
-            null , new ModifiableAdNetworkDataImpl()
+            null , new MutableAdNetworkDataImpl()
         )
     );
   }

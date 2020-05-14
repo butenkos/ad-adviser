@@ -1,6 +1,6 @@
 package com.butenkos.ad.sdk.adviser.dao;
 
-import com.butenkos.ad.sdk.adviser.model.domain.ModifiableAdNetworkData;
+import com.butenkos.ad.sdk.adviser.model.domain.MutableAdNetworkData;
 
 /**
  * Implementation of the interface is responsible to populate an instance of {@code AdNetworkDataCache}
@@ -12,12 +12,12 @@ public interface AdNetworkDataDao {
    * @param batchJobId - unique batch job identifier
    * @return - all the AdNetwork data collected during specified batch job
    */
-  ModifiableAdNetworkData getByBatchJobId(String batchJobId);
+  MutableAdNetworkData getByBatchJobId(String batchJobId);
 
   /**
    * used to read the data the most recent batch job
    *
    * @return - all the AdNetwork data collected during the most recent
    */
-  ModifiableAdNetworkData getMostRecent();
+  MutableAdNetworkData getMostRecent();
 }

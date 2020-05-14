@@ -36,10 +36,10 @@ public class AdNetworkDataDaoImpl implements AdNetworkDataDao {
    * @return AdNetworkData -
    */
   @Override
-  public ModifiableAdNetworkData getByBatchJobId(String batchJobId) {
+  public MutableAdNetworkData getByBatchJobId(String batchJobId) {
     checkNotNull(batchJobId);
     LOG.info("trying to get AdNetworkData by batchJobId='{}' from the DB", batchJobId);
-    final ModifiableAdNetworkData adNetworkData = jdbcTemplate.query(
+    final MutableAdNetworkData adNetworkData = jdbcTemplate.query(
         SELECT_DATA_BY_BATCH_JOB_ID,
         new Object[]{batchJobId},
         getMapResultSetExtractor()
@@ -49,9 +49,9 @@ public class AdNetworkDataDaoImpl implements AdNetworkDataDao {
   }
 
   @Override
-  public ModifiableAdNetworkData getMostRecent() {
+  public MutableAdNetworkData getMostRecent() {
     LOG.info("trying to get most recent AdNetworkData from the DB");
-    final ModifiableAdNetworkData adNetworkData = jdbcTemplate.query(
+    final MutableAdNetworkData adNetworkData = jdbcTemplate.query(
         SELECT_MOST_RECENT_DATA,
         getMapResultSetExtractor()
     );
@@ -59,9 +59,9 @@ public class AdNetworkDataDaoImpl implements AdNetworkDataDao {
     return adNetworkData;
   }
 
-  private ResultSetExtractor<ModifiableAdNetworkData> getMapResultSetExtractor() {
+  private ResultSetExtractor<MutableAdNetworkData> getMapResultSetExtractor() {
     return rs -> {
-      final ModifiableAdNetworkData data = new ModifiableAdNetworkDataImpl();
+      final MutableAdNetworkData data = new MutableAdNetworkDataImpl();
       while (rs.next()) {
         final Country country = Country.findByCode(rs.getString("COUNTRY"));
         final AdType adType = AdType.valueOf(rs.getString("AD_TYPE"));

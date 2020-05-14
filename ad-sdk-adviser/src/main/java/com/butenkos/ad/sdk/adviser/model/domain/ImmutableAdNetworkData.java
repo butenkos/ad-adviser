@@ -1,5 +1,6 @@
 package com.butenkos.ad.sdk.adviser.model.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +16,13 @@ import static java.util.Collections.unmodifiableMap;
 public class ImmutableAdNetworkData implements AdNetworkData {
   private final AdNetworkData adNetworkData;
 
-  public ImmutableAdNetworkData(AdNetworkData adNetworkData) {
+  public ImmutableAdNetworkData(MutableAdNetworkData adNetworkData) {
     checkNotNull(adNetworkData);
+    adNetworkData.getAllContents().values().forEach(
+        map -> map.keySet().forEach(
+            key -> map.put(key, Collections.unmodifiableList(map.get(key)))
+        )
+    );
     this.adNetworkData = adNetworkData;
   }
 
