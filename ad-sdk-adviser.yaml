@@ -1,0 +1,162 @@
+openapi: 3.0.1
+info:
+  title: Ad Network SDK adviser
+  description: test assignment
+  contact:
+    name: Sergey Butenko
+    email: s.butenko@rambler.ru
+  version: SNAPSHOT
+servers:
+  - url: 'http://localhost:8180'
+    description: Generated server url
+paths:
+  /advise:
+    post:
+      tags:
+        - Ad-network adviser
+      description: returns a list of ordered by score and filtered by configured constraints ad network names
+      operationId: adviseAdNetwork
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdNetworkAdviseRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdNetworkAdviseResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+  /cache/contents:
+    get:
+      tags:
+        - monitoring-controller
+      description: prints out cache contents
+      operationId: getCacheContents
+      responses:
+        '200':
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+  /cache/stats:
+    get:
+      tags:
+        - monitoring-controller
+      description: returns statistics of ad networks by country and typ stored in the cache at the moment
+      operationId: getCacheState
+      responses:
+        '200':
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+  /config/update:
+    post:
+      tags:
+        - update-controller
+      description: forces all the instances of the app to reload such configuration as constraints and fallback lists
+      operationId: updateConfig
+      responses:
+        '200':
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+  '/cache/update/{batchJobId}':
+    post:
+      tags:
+        - update-controller
+      description: forces all the instances of the app to reload cache with the data of the particular batch job
+      operationId: updateConfig_1
+      parameters:
+        - name: batchJobId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+  /cache/update:
+    post:
+      tags:
+        - update-controller
+      description: forces all the instances of the app to reload cache with the data of the most recent batch job
+      operationId: updateConfig_2
+      responses:
+        '200':
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+components:
+  schemas:
+    AdNetworkAdviseRequest:
+      required:
+        - applicationName
+        - countryCode
+        - operatingSystem
+        - operatingSystemVersion
+      type: object
+      properties:
+        countryCode:
+          type: string
+        operatingSystem:
+          type: string
+        operatingSystemVersion:
+          type: string
+        applicationName:
+          type: string
+        ageRestriction:
+          type: integer
+          format: int32
+    AdNetworkAdviseResponse:
+      type: object
+      properties:
+        bannerAdNetworks:
+          type: array
+          items:
+            type: string
+        interstitialAdNetworks:
+          type: array
+          items:
+            type: string
+        videoAdNetworks:
+          type: array
+          items:
+            type: string
+        warning:
+          type: string
+          description: 'Notifies, whether fallback list of ad networks was sent, and, also the set of networks which cannot be served due to configured restrictions (except for conflicting networks)'
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+        status:
+          type: string
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string

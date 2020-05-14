@@ -1,0 +1,28 @@
+openapi: 3.0.1
+info:
+  title: Ad SDK info updater (Batch Job Simulator)
+  description: test assignment
+  contact:
+    name: Sergey Butenko
+    email: s.butenko@rambler.ru
+  version: SNAPSHOT
+servers:
+  - url: 'http://localhost:8887'
+    description: Generated server url
+paths:
+  /batchjob/perform:
+    post:
+      tags:
+        - batch-job-controller
+      description: generates random test data and notifies all the instances of ad-sdk-adviser to reload the cache
+      operationId: performBatchJob
+      responses:
+        '200':
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: string
+components: {}
