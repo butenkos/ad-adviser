@@ -136,6 +136,35 @@ Exposed services allow:
 ui of ad-sdk-info-updater can be reached this link via link http://localhost:8887/swagger-ui.html <br/>
 It exposes a single endpoint, which allows to simulate a batch job and populate the database with the new random test data and notify all running instances of ad-sdk-adviser in order to reload their caches.
 
+**NOTE**<br/>
+For simplicity, just small set of countries was used in the app. Please refer to the following list (use 3-character code in your requests):<br/>
+  ANGOLA("AGO", AFRICA),
+  ALGERIA("DZA", AFRICA),
+  MOROCCO("MAR", AFRICA),
+  NIGERIA("NGA", AFRICA),
+  SAR("ZAF", AFRICA),
+  BRAZIL("BRA", SOUTH_AMERICA),
+  ARGENTINA("ARG", SOUTH_AMERICA),
+  URUGUAY("URY", SOUTH_AMERICA),
+  CHILE("CHL", SOUTH_AMERICA),
+  ECUADOR("ECU", SOUTH_AMERICA),
+  USA("USA", NORTH_AMERICA),
+  CANADA("CAN", NORTH_AMERICA),
+  JAPAN("JPN", ASIA),
+  CHINA("CHN", ASIA),
+  ITALY("ITA", EUROPE),
+  SPAIN("ESP", EUROPE),
+  ENGLAND("ENG", EUROPE),
+  RUSSIA("RUS", EUROPE),
+  SLOVENIA("SVN", EUROPE),
+  AUSTRIA("AUT", EUROPE),
+  GERMANY("DEU", EUROPE),
+  FRANCE("FRA", EUROPE),
+  SCOTLAND("SCO", EUROPE),
+  IRELAND("IRL", EUROPE),
+  AUSTRALIA("AUS", OCEANIA),
+  NEW_ZEALAND("NZL", OCEANIA);
+
 ## Final word
 Thanks a lot, it was fun :)
 If you have any questions, please contact me.
