@@ -33,3 +33,7 @@ modules.xml
 
 #Test file, dynamically created, normally deleted after test
 **/RegKey.reg
+
+#ActiveMQ
+/activemq-data/**
+/activemq-data/**k
