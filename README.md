@@ -9,7 +9,6 @@ test assignment
 ### Some more implementation details
 ### How to build and run
 ### How to use the app
-### Final word
 
 ## Initial conditions based on assignment text and assumptions
 -	It’s assumed that all the client needs from the service is a list of ad network SDK provider names for every type of the ad (banner, interstitial, and video – three lists in total), sorted in descending order by the calculated priority. The service must return only names and no other additional information, since the client already has all the required information to work with any ad network or can fetch it from another service
@@ -165,6 +164,3 @@ For simplicity, just small set of countries was used in the app. Please refer to
   AUSTRALIA("AUS", OCEANIA),
   NEW_ZEALAND("NZL", OCEANIA);
 
-## Final word
-Thanks a lot, it was fun :)
-If you have any questions, please contact me.
