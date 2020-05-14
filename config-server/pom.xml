@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.butenkos</groupId>
     <artifactId>config-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>demo</version>
     <name>config-server</name>
     <description>central place for managing configuration</description>
 

@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.butenkos</groupId>
     <artifactId>database-mock-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>demo</version>
     <name>database-mock-service</name>
     <description>mock of full-fledged database</description>
 

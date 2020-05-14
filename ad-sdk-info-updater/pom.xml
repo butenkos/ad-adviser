@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.butenkos</groupId>
     <artifactId>ad-sdk-info-updater</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>demo</version>
     <name>ad-sdk-info-updater</name>
     <description>Service responsible for collecting Ad Network data and updating the database</description>
 
