@@ -1,3 +1,6 @@
+## NOTE 
+"master" branch is frozen as of 14.05.2020 (test assignment completion deadline). In case you're interested, branch "improvements" contains some significant changes (architectural changes, code cleanup, aligning to conventions etc.)
+
 # ad-adviser
 test assignment
 
