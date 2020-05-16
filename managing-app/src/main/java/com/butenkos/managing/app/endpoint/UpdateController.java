@@ -1,6 +1,6 @@
-package com.butenkos.config.server.endpoint;
+package com.butenkos.managing.app.endpoint;
 
-import com.butenkos.config.server.messaging.NotificationSender;
+import com.butenkos.managing.app.messaging.NotificationSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

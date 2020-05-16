@@ -1,4 +1,4 @@
-package com.butenkos.config.server.messaging;
+package com.butenkos.managing.app.messaging;
 
 public interface NotificationSender {
   void sendUpdateCache();

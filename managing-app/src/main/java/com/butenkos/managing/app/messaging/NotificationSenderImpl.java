@@ -1,4 +1,4 @@
-package com.butenkos.config.server.messaging;
+package com.butenkos.managing.app.messaging;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;

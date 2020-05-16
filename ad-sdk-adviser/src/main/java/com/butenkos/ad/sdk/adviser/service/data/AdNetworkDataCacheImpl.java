@@ -102,7 +102,10 @@ public class AdNetworkDataCacheImpl implements AdNetworkDataCache {
       throw new FailedToUpdateCachedAdNetworksDataException(errorMessage);
     } else {
       this.adNetworkData = new ImmutableAdNetworkData(updatedData);
-      LOG.info("AdNetworksData cache updated successfully, it contains {} entries", updatedData.getEntriesCount());
+      LOG.info("AdNetworksData cache updated successfully, batchJobId={}, it contains {} entries",
+          updatedData.getBatchJobId(),
+          updatedData.getEntriesCount()
+      );
     }
   }
 
