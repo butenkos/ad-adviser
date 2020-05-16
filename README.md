@@ -1,10 +1,11 @@
 ## Updates
-> - control over cache updates and configuration updates was transfered to Config Server. It is still bad solution, separate microservice should be created to do this job. Config server is also runs JMS-broker.<br/>
-Currently, to reload cache of all running instances of ad-sdk-adviser is possible via the following URLs:<br/>
->`[POST] <config-server host>:<config server port>/cache`<br/>
->`[POST] <config-server host>:<config server port>/cache/batchJobId`<br/>
+> - control over cache updates and configuration updates was transfered to the managing-app. <br/>
+> Currently, to reload cache of all running instances of ad-sdk-adviser is possible via the following URLs:<br/>
+>`[POST] <managing-app host>:<config server port>/cache`<br/>
+>`[POST] <managing-app host>:<config server port>/cache/batchJobId`<br/>
 > to update configuration:</br>
->`[POST] <config-server host>:<config server port>/config`<br/>
+>`[POST] <managing-app host>:<config server port>/config`<br/>
+> - Config server runs JMS-broker.<br/>
 > - messaging was improved by means of selectors
 > - API URLs are changed to be more RESTful ([POST] /cache/update -> [POST] /cache, [POST] /cache/update/{batchJobId} -> [POST] /cache/{batchJobId} etc.
 
@@ -65,19 +66,20 @@ Since countries and ad types are predefined constants, we can make enums from th
 o	Scores are sorted in descending order via ORDER BY condition SQL select query. No more sorting ever required at runtime.
 
 ## Stack
-Technical implementation is build upon Spring Boot (Web, Cloud)
-o language - Java 8
-o DB - in-memory H2 database
-o messaging - activeMQ
-o web-service documentation - Swagger
-o build tool - Maven
+Technical implementation is build upon Spring Boot (Web, Cloud)<br/>
+o programming language - Java 8<br/>
+o DB - in-memory H2 database<br/>
+o messaging - activeMQ<br/>
+o web-service documentation - Swagger<br/>
+o build tool - Maven<br/>
 
 ## Components overview
-Final solution consist of four components:
-o ad-sdk-adviser
-o ad-sdk-info-updater
-o config-server
-o database-mock-service
+Final solution consist of four components:<br/>
+o ad-sdk-adviser<br/>
+o ad-sdk-info-updater<br/>
+o config-server<br/>
+o database-mock-service<br/>
+o managing-app<br/>
 
 ### ad-sdk-adviser
 This service does the actual job serving ad networks data to the client applications. For better performance it stores all the data received as a result of the most recent batch job in memory. 
@@ -106,6 +108,9 @@ It also 'hosts' embedded jms-brocker, which I decided not to make standalone ser
 ### database-mock-service
 has no business logic, just runs H2 in-memory database, which is being populated with a small set of predefined data.
 
+### managing-app
+allows to send 'reload cache' and 'reload configuration' commands to all running instances of ad-sdk-adviser
+
 ## Some more implementation details
 there are just two tables in the database - one for storing the data, and the other is for different instances of the application to register themself in the cluster<br/>
 For simplicity, such data as, for example, date-time of completed batch job and reference for ad networks names, country codes etc are not stored in the DB.
@@ -119,8 +124,9 @@ You can also download it as a binary [here](https://drive.google.com/file/d/14eB
 2. database-mock-service (port 8889)
 3. ad-sdk-info-updater (port 8887)
 4. ad-sdk-adviser (port 8180)
-To run multiple instances of ad-sdk-adviser the one should use other ports (8280, 8380 and so on)
-The following ports are also in use - `9090` (database) and '61616' (messaging broker)
+5. managing-app (port 8886)<br/>
+The following ports are also in use - `9090` (database) and '61616' (messaging broker)<br/>
+To run multiple instances of ad-sdk-adviser the one should use other ports (8280, 8380 and so on)<br/>
 
 to start the application use the following command `java -jar <artifact-name>.jar` <br/>
 properties, such as ports, can be overriden with using of `--`, for example:<br/>
@@ -141,9 +147,18 @@ Exposed services allow:
 - reload constraints and fallback configuration defined in `.properties` file after it was changed and pushed to the repository - updates all running instances
 - display brief statistics of the data in cache (number of ad network entries by country and ad type, batch job id, entry count)
 - print out the cache contents
-
+<br/>
 ui of ad-sdk-info-updater can be reached this link via link http://{lhost_name}:8887/swagger-ui.html <br/>
 It exposes a single endpoint, which allows to simulate a batch job and populate the database with the new random test data and notify all running instances of ad-sdk-adviser in order to reload their caches.
+<br/>
+ui of managing-app can be reached this link via link http://{host_name}:8886/swagger-ui.html <br/>
+There you can find all the endpoints and brief description of them. There you can also execute every request (click endpoint -> "Try it out" -> fill required data -> "Execute") <br/>
+Exposed services allow:
+- update the cache with the most recent data - updates all running instances of ad-sdk-adviser
+- update the cache with data of specific batch job (by its id) - updates all running instances of ad-sdk-adviser
+- reload constraints and fallback configuration defined in `.properties` file after it was changed and pushed to the repository - updates all running instances of ad-sdk-adviser
+<br/>
+
 
 **NOTE**<br/>
 For simplicity, just small set of countries was used in the app. Please refer to the following list (use 3-character code in your requests):<br/>
