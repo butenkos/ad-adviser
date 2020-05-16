@@ -1,10 +1,10 @@
 ## Updates
 > - control over cache updates and configuration updates was transfered to the managing-app. <br/>
 > Currently, to reload cache of all running instances of ad-sdk-adviser is possible via the following URLs:<br/>
->`[POST] <managing-app host>:<config server port>/cache`<br/>
->`[POST] <managing-app host>:<config server port>/cache/batchJobId`<br/>
+>`[POST] <managing-app host>:<managing-app port>/cache`<br/>
+>`[POST] <managing-app host>:<managing-app port>/cache/batchJobId`<br/>
 > to update configuration:</br>
->`[POST] <managing-app host>:<config server port>/config`<br/>
+>`[POST] <managing-app host>:<managing-app port>/config`<br/>
 > - Config server runs JMS-broker.<br/>
 > - messaging was improved by means of selectors
 > - API URLs are changed to be more RESTful ([POST] /cache/update -> [POST] /cache, [POST] /cache/update/{batchJobId} -> [POST] /cache/{batchJobId} etc.
