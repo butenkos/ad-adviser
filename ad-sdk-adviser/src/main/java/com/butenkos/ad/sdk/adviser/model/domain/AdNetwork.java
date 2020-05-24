@@ -3,7 +3,7 @@ package com.butenkos.ad.sdk.adviser.model.domain;
 import java.util.Objects;
 
 /**
- * Model representing rated Ad Network SDK provider
+ * Model representing rated Ad Network SDK provider.
  */
 public class AdNetwork {
   private final String name;

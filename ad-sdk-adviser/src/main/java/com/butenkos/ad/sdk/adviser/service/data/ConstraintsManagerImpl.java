@@ -90,7 +90,10 @@ public class ConstraintsManagerImpl implements ConstraintsManager {
     }
   }
 
-  private List<AdNetwork> manageConflictingNetworks(List<AdNetwork> adNetworkList, Set<String> configuredRestrictions) {
+  private List<AdNetwork> manageConflictingNetworks(
+      List<AdNetwork> adNetworkList,
+      Set<String> configuredRestrictions
+  ) {
     final Set<String> allConflictingAdNetworks = findAllConflictingAdNetworks(configuredRestrictions);
     if (adNetworkList.isEmpty()) {
       return adNetworkList;
@@ -121,7 +124,7 @@ public class ConstraintsManagerImpl implements ConstraintsManager {
 
   private Set<String> findAllConflictingAdNetworks(Set<String> configuredRestrictions) {
     final Set<String> resultSet = new HashSet<>(configuredRestrictions);
-    configuredRestrictions.stream().map(AdName -> config.getConflictingAdNetworks().get(AdName)).forEach(
+    configuredRestrictions.stream().map(adName -> config.getConflictingAdNetworks().get(adName)).forEach(
         resultSet::addAll
     );
     return resultSet;

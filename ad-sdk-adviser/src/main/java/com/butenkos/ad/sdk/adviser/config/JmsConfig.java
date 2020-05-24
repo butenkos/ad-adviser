@@ -15,7 +15,7 @@ import org.springframework.jms.support.converter.MessageConverter;
 public class JmsConfig {
 
   @Bean
-  public ActiveMQConnectionFactory getActiveMQConnectionFactory(@Value("${activemq.broker-url}") String brokerUrl) {
+  public ActiveMQConnectionFactory getActiveMqConnectionFactory(@Value("${activemq.broker-url}") String brokerUrl) {
     final ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
     factory.setBrokerURL(brokerUrl);
 //    factory.setTrustedPackages(Collections.singletonList("com.butenkos"));

@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 /**
- * POJO representation of JSON response
+ * POJO representation of JSON response.
  */
 @SuppressWarnings("unused")
 public class AdNetworkAdviseResponse {
@@ -14,8 +14,8 @@ public class AdNetworkAdviseResponse {
   private List<String> videoAdNetworks;
   @Schema(
       name = "warning",
-      description = "Notifies, whether fallback list of ad networks was sent, and, also the set of networks " +
-          "which cannot be served due to configured restrictions (except for conflicting networks)"
+      description = "Notifies, whether fallback list of ad networks was sent, and, also the set of networks "
+          + "which cannot be served due to configured restrictions (except for conflicting networks)"
   )
   private String warning;
 

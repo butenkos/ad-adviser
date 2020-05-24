@@ -112,13 +112,13 @@ public class AdviseAdNetworksImpl implements AdviseAdNetworks {
       List<String> filteredNetworksList,
       AdType adType
   ) {
-    return filteredNetworksList.isEmpty() ?
-        new AdNetworkSearchingAndFilteringResult(
-            fallbackAdNetworkDataConfiguration.getAdNetworkNames(requestData.country.getRegion(), adType),
-            adType,
-            true
-        ) :
-        new AdNetworkSearchingAndFilteringResult(filteredNetworksList, adType);
+    return filteredNetworksList.isEmpty()
+        ? new AdNetworkSearchingAndFilteringResult(
+        fallbackAdNetworkDataConfiguration.getAdNetworkNames(requestData.country.getRegion(), adType),
+        adType,
+        true
+    )
+        : new AdNetworkSearchingAndFilteringResult(filteredNetworksList, adType);
   }
 
   private List<String> filterAdNetworksByConfiguredRestrictionsAndGetTheirNames(

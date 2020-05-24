@@ -61,14 +61,14 @@ public class AdviserController {
       return ResponseEntity.ok(useCase.giveAdvice(request));
     } catch (BeanValidationException | CountryNotFoundException e) {
       LOG.error("Validation error, request={}", request, e);
-      return ResponseEntity.
-          badRequest().
-          body(new ErrorResponse("400", "Bad Request", e.getMessage(), "/advise"));
+      return ResponseEntity
+          .badRequest()
+          .body(new ErrorResponse("400", "Bad Request", e.getMessage(), "/advise"));
     } catch (Exception e) {
       LOG.error("error, request={}", request, e);
-      return ResponseEntity.
-          badRequest().
-          body(new ErrorResponse("500", "Internal Server Error", e.getMessage(), "/advise"));
+      return ResponseEntity
+          .badRequest()
+          .body(new ErrorResponse("500", "Internal Server Error", e.getMessage(), "/advise"));
     }
   }
 

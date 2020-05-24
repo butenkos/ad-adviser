@@ -23,7 +23,7 @@ import static java.util.Collections.emptyList;
  * @see MutableAdNetworkDataImpl
  */
 public class AdNetworkDataCacheImpl implements AdNetworkDataCache {
-  private final static Logger LOG = LoggerFactory.getLogger(AdNetworkDataCacheImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AdNetworkDataCacheImpl.class);
   private final AdNetworkDataDao dataDao;
   private transient AdNetworkData adNetworkData;
 
@@ -131,8 +131,8 @@ public class AdNetworkDataCacheImpl implements AdNetworkDataCache {
 
   @Override
   public String toString() {
-    return "AdNetworkDataCacheImpl{" +
-        "adNetworkData=" + adNetworkData +
-        '}';
+    return "AdNetworkDataCacheImpl{"
+        + "adNetworkData=" + adNetworkData
+        + '}';
   }
 }
