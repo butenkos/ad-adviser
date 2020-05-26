@@ -8,6 +8,7 @@
 > - Config server runs JMS-broker.<br/>
 > - messaging was improved by means of selectors
 > - API URLs are changed to be more RESTful ([POST] /cache/update -> [POST] /cache, [POST] /cache/update/{batchJobId} -> [POST] /cache/{batchJobId} etc.
+=======
 
 # ad-adviser
 test assignment
