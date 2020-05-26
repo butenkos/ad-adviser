@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.net.InetAddress;
 
 /**
- * Implementation sufficient to test clustering locally
+ * Implementation sufficient to test clustering locally.
  *
  * @see com.butenkos.ad.sdk.adviser.init.AppUrlProvider
  */

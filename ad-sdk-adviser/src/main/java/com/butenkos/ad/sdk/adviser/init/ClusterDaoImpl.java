@@ -12,11 +12,11 @@ import java.util.List;
  */
 @Component
 public class ClusterDaoImpl implements ClusterDao {
-  private static final String UPDATE_CLUSTER_RECORD_QUERY = "MERGE INTO CLUSTER_RECORD (ID, APPLICATION_URL, STATUS) " +
-      "KEY(APPLICATION_URL) " +
-      "SELECT null, ?, ?";
-  private static final String FIND_OTHER_RUNNING_INSTANCES_QUERY = "SELECT APPLICATION_URL FROM CLUSTER_RECORD " +
-      "WHERE APPLICATION_URL != ? AND STATUS='RUNNING'";
+  private static final String UPDATE_CLUSTER_RECORD_QUERY = "MERGE INTO CLUSTER_RECORD (ID, APPLICATION_URL, STATUS) "
+      + "KEY(APPLICATION_URL) "
+      + "SELECT null, ?, ?";
+  private static final String FIND_OTHER_RUNNING_INSTANCES_QUERY = "SELECT APPLICATION_URL FROM CLUSTER_RECORD "
+      + "WHERE APPLICATION_URL != ? AND STATUS='RUNNING'";
   private final JdbcTemplate jdbcTemplate;
 
   @Autowired

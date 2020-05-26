@@ -34,14 +34,14 @@ public class BatchJobController {
       operationId = "performBatchJob",
       description = "generates random test data and notifies all the instances of ad-sdk-adviser to reload the cache"
   )
-  @PostMapping("/batchjob/perform")
+  @PostMapping("/batchjob")
   public List<String> performBatchJob() {
     List<String> batchJobIds = null;
     try {
       LOG.info("start batch job...");
       batchJobIds = dataCreator.generateTestDataInDb(1, Country.values());
       LOG.info("batchJob completed successfully, id={}", batchJobIds);
-      sender.sendUpdateCacheMessage("update_cache");
+      sender.sendUpdateCacheMessage(batchJobIds.get(0));
       return batchJobIds;
     } catch (FailedToSendUpdateCacheMessage e) {
       LOG.error(

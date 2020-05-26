@@ -28,7 +28,7 @@ public class MonitoringController {
   }
 
   @Operation(method = "GET", operationId = "getCacheContents", description = "prints out cache contents")
-  @GetMapping("/cache/contents")
+  @GetMapping("/cache")
   public String getCacheContents() {
     return dataCache.printContents();
   }

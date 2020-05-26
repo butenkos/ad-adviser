@@ -1,5 +1,14 @@
-## NOTE 
-> "master" branch is frozen as of 14.05.2020 (test assignment completion deadline). In case you're interested, branch "improvements" contains some significant changes (architectural changes, code cleanup, aligning to conventions etc.)
+## Updates
+> - control over cache updates and configuration updates was transfered to the managing-app. <br/>
+> Currently, to reload cache of all running instances of ad-sdk-adviser is possible via the following URLs:<br/>
+>`[POST] <managing-app host>:<managing-app port>/cache`<br/>
+>`[POST] <managing-app host>:<managing-app port>/cache/batchJobId`<br/>
+> to update configuration:</br>
+>`[POST] <managing-app host>:<managing-app port>/config`<br/>
+> - Config server runs JMS-broker.<br/>
+> - messaging was improved by means of selectors
+> - API URLs are changed to be more RESTful ([POST] /cache/update -> [POST] /cache, [POST] /cache/update/{batchJobId} -> [POST] /cache/{batchJobId} etc.
+=======
 
 # ad-adviser
 test assignment
@@ -58,19 +67,20 @@ Since countries and ad types are predefined constants, we can make enums from th
 o	Scores are sorted in descending order via ORDER BY condition SQL select query. No more sorting ever required at runtime.
 
 ## Stack
-Technical implementation is build upon Spring Boot (Web, Cloud)
-o language - Java 8
-o DB - in-memory H2 database
-o messaging - activeMQ
-o web-service documentation - Swagger
-o build tool - Maven
+Technical implementation is build upon Spring Boot (Web, Cloud)<br/>
+o programming language - Java 8<br/>
+o DB - in-memory H2 database<br/>
+o messaging - activeMQ<br/>
+o web-service documentation - Swagger<br/>
+o build tool - Maven<br/>
 
 ## Components overview
-Final solution consist of four components:
-o ad-sdk-adviser
-o ad-sdk-info-updater
-o config-server
-o database-mock-service
+Final solution consist of four components:<br/>
+o ad-sdk-adviser<br/>
+o ad-sdk-info-updater<br/>
+o config-server<br/>
+o database-mock-service<br/>
+o managing-app<br/>
 
 ### ad-sdk-adviser
 This service does the actual job serving ad networks data to the client applications. For better performance it stores all the data received as a result of the most recent batch job in memory. 
@@ -90,17 +100,20 @@ If no data found for a particular country, then app falls to fallback list of th
 
 ### ad-sdk-info-updater
 This service emulates batch job processor which collects all the data from providers, analyzes it and saves to the DB.<br/>
-It's also 'hosts' embedded jms-brocker, which I decided not to make standalone service in order to not overcomplicate the solution, for easier build and deploy of the app <br/>
 "Batch job" process can be triggered via call to REST service, it generates random test data, stores it in the table and notifies all the running instances of ad-sdk-adviser via "topic->subscriber" mechanism
 
 ### config-server
-manages configurations of all applications. As a storage uses git repository.
+manages configurations of all applications. As a storage uses git repository.<br/>
+It also 'hosts' embedded jms-brocker, which I decided not to make standalone service in order to not overcomplicate the solution, for easier build and deploy of the app <br/>
 
 ### database-mock-service
 has no business logic, just runs H2 in-memory database, which is being populated with a small set of predefined data.
 
+### managing-app
+allows to send 'reload cache' and 'reload configuration' commands to all running instances of ad-sdk-adviser
+
 ## Some more implementation details
-there are just two tables in the database - one for storing the data, and the other is for different instances of the application to register themself in the cluster. The latter seems and implemented pretty awkward, due to known restrictions, but it still allows instances of the app to communicate with eachother.<br/>
+there are just two tables in the database - one for storing the data, and the other is for different instances of the application to register themself in the cluster<br/>
 For simplicity, such data as, for example, date-time of completed batch job and reference for ad networks names, country codes etc are not stored in the DB.
 
 ## How to build and run
@@ -108,12 +121,13 @@ Modules are compiled and packed to executable jar.
 To build module from the source code the one should execute maven command (`mvn package` or `mvn package -DskipTests`)
 You can also download it as a binary [here](https://drive.google.com/file/d/14eB57-J3DwifYcyKx0mA2sZA1FMXQWSH/view?usp=sharing) <br/>
 **Important!** Order of start is the following:<br/>
-1. config-server (running on port 8888
+1. config-server (running on port 8888)
 2. database-mock-service (port 8889)
 3. ad-sdk-info-updater (port 8887)
 4. ad-sdk-adviser (port 8180)
-To run multiple instances of ad-sdk-adviser the one should use other ports (8280, 8380 and so on)
-The following ports are also in use - `9090` (database) and '61616' (messaging broker)
+5. managing-app (port 8886)<br/>
+The following ports are also in use - `9090` (database) and '61616' (messaging broker)<br/>
+To run multiple instances of ad-sdk-adviser the one should use other ports (8280, 8380 and so on)<br/>
 
 to start the application use the following command `java -jar <artifact-name>.jar` <br/>
 properties, such as ports, can be overriden with using of `--`, for example:<br/>
@@ -123,20 +137,25 @@ config server serves property files form [this repo](https://github.com/butenkos
 
 ## How to use the app
 Assuming you're using default ports<br/>
-h2 console is accessible via url http://{host_name}:8889/h2-console/ (username=sa, password=password)<br>
+**h2 console** is accessible via url http://{host_name}:8889/h2-console/ (username=sa, password=password)<br>
 ad-sdk-info-updater and ad-sdk-adviser has a built-in autogenerated Swagger UI. Here you can see all the endpoints and easily test them.<br>
-ui of ad-sdk-adviser can be reached this link via link http://{host_name}:8180/swagger-ui.html <br/>
-There you can find all endpoints and brief description of them. There you can also execute every request (click endpoint -> "Try it out" -> fill required data -> "Execute") <br/>
+o	ui of **ad-sdk-adviser** can be reached this link via link http://{host_name}:8180/swagger-ui.html <br/>
+There you can find all the endpoints and brief description of them. There you can also execute every request (click endpoint -> "Try it out" -> fill required data -> "Execute") <br/>
 Exposed services allow:
-- to "advise" which networks to use by request data
-- update the cache with the most recent data - updates all running instances
-- update the cache with data of specific batch job (by its id) - updates all running instances
-- reload constraints and fallback configuration defined in `.properties` file after it was changed and pushed to the repository - updates all running instances
 - display brief statistics of the data in cache (number of ad network entries by country and ad type, batch job id, entry count)
 - print out the cache contents
-
-ui of ad-sdk-info-updater can be reached this link via link http://{lhost_name}:8887/swagger-ui.html <br/>
+<br/>
+o	ui of **ad-sdk-info-updater** can be reached this link via link http://{lhost_name}:8887/swagger-ui.html <br/>
 It exposes a single endpoint, which allows to simulate a batch job and populate the database with the new random test data and notify all running instances of ad-sdk-adviser in order to reload their caches.
+<br/>
+o	ui of **managing-app** can be reached this link via link http://{host_name}:8886/swagger-ui.html <br/>
+There you can find all the endpoints and brief description of them. There you can also execute every request (click endpoint -> "Try it out" -> fill required data -> "Execute") <br/>
+Exposed services allow:
+- update the cache with the most recent data - updates all running instances of ad-sdk-adviser
+- update the cache with data of specific batch job (by its id) - updates all running instances of ad-sdk-adviser
+- reload constraints and fallback configuration defined in `.properties` file after it was changed and pushed to the repository - updates all running instances of ad-sdk-adviser
+<br/>
+
 
 **NOTE**<br/>
 For simplicity, just small set of countries was used in the app. Please refer to the following list (use 3-character code in your requests):<br/>

@@ -23,7 +23,7 @@ import static java.util.Collections.emptyList;
  * @see MutableAdNetworkDataImpl
  */
 public class AdNetworkDataCacheImpl implements AdNetworkDataCache {
-  private final static Logger LOG = LoggerFactory.getLogger(AdNetworkDataCacheImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AdNetworkDataCacheImpl.class);
   private final AdNetworkDataDao dataDao;
   private transient AdNetworkData adNetworkData;
 
@@ -102,7 +102,10 @@ public class AdNetworkDataCacheImpl implements AdNetworkDataCache {
       throw new FailedToUpdateCachedAdNetworksDataException(errorMessage);
     } else {
       this.adNetworkData = new ImmutableAdNetworkData(updatedData);
-      LOG.info("AdNetworksData cache updated successfully, it contains {} entries", updatedData.getEntriesCount());
+      LOG.info("AdNetworksData cache updated successfully, batchJobId={}, it contains {} entries",
+          updatedData.getBatchJobId(),
+          updatedData.getEntriesCount()
+      );
     }
   }
 
@@ -128,8 +131,8 @@ public class AdNetworkDataCacheImpl implements AdNetworkDataCache {
 
   @Override
   public String toString() {
-    return "AdNetworkDataCacheImpl{" +
-        "adNetworkData=" + adNetworkData +
-        '}';
+    return "AdNetworkDataCacheImpl{"
+        + "adNetworkData=" + adNetworkData
+        + '}';
   }
 }

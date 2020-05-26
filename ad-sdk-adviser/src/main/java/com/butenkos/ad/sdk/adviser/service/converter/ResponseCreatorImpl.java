@@ -55,9 +55,9 @@ public class ResponseCreatorImpl implements ResponseCreator {
         .map(result -> result.getAdType().toString())
         .collect(Collectors.joining(", "));
     final String networksToAvoid = String.join(", ", adNetworkNamesToAvoid);
-    final String fallbackWarning = fallback.isEmpty() ?
-        "" :
-        "fallback list was used for the following ad types: " + fallback;
+    final String fallbackWarning = fallback.isEmpty()
+        ? ""
+        : "fallback list was used for the following ad types: " + fallback;
     final String networksToAvoidWarning = networksToAvoid.isEmpty() ? "" : "Not allowed networks: " + networksToAvoid;
     return Stream.of(fallbackWarning, networksToAvoidWarning)
         .filter(msg -> !msg.isEmpty())

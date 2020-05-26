@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Structure designed to hold all the current AdNetwork information in memory at runtime
+ * Structure designed to hold all the current AdNetwork information in memory at runtime.
  */
 public interface AdNetworkData {
   Map<AdType, List<AdNetwork>> get(Country country);

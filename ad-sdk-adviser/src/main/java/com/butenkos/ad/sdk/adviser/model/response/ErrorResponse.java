@@ -3,7 +3,7 @@ package com.butenkos.ad.sdk.adviser.model.response;
 import java.time.LocalDateTime;
 
 /**
- * POJO representation of JSON error response
+ * POJO representation of JSON error response.
  */
 @SuppressWarnings("unused")
 public class ErrorResponse {
